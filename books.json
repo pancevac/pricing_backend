@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "pages": 324,
+    "rating": 4.8,
+    "price": 14.99
+  },
+  {
+    "id": 2,
+    "title": "1984",
+    "author": "George Orwell",
+    "pages": 328,
+    "rating": 4.7,
+    "price": 12.95
+  },
+  {
+    "id": 3,
+    "title": "Animal Farm",
+    "author": "George Orwell",
+    "pages": 112,
+    "rating": 4.6,
+    "price": 8.99
+  },
+  {
+    "id": 4,
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "pages": 279,
+    "rating": 4.6,
+    "price": 9.99
+  },
+  {
+    "id": 5,
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "pages": 180,
+    "rating": 4.4,
+    "price": 10.99
+  }
+]
