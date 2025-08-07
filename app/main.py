@@ -4,11 +4,11 @@ from starlette.responses import JSONResponse
 
 from app.routes.books import router as books_router
 from app.routes.health import router as health_router
-from app.events import on_start
+from app.events import lifespan
 from app.config import settings
 from app.exceptions import NotFoundException, IntegrityException
 
-app = FastAPI(title="Pricing Backend API", lifespan=on_start, debug=settings.DEBUG)
+app = FastAPI(title="Pricing Backend API", lifespan=lifespan, debug=settings.DEBUG)
 
 app.add_middleware(
     CORSMiddleware,

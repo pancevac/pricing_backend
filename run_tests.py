@@ -1,7 +1,7 @@
 import random
 import sys
 import requests
-BASE = "http://app:8080"
+BASE = "http://app:8080"  # NOTE: This is only changed to be able to work in docker environment
 HEADERS = {"Content-Type": "application/json"}
 
 def test_health_check():

@@ -4,7 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: app
-    command: /bin/sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload"
+    command: sh -c "
+      sleep 5 &&
+      alembic upgrade head &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload"
     ports:
       - "8080:8080"
     depends_on:
@@ -27,41 +30,39 @@ services:
       POSTGRES_DB: postgres_db
     ports:
       - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
 
 
-  shell:
+#  shell:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: shell
+#    command: tail -f /dev/null
+#    depends_on:
+#      - db
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=postgres_db
+#      - POSTGRES_HOST=db
+#    volumes:
+#      - .:/app
+
+
+  run_test_script:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: shell
-    command: tail -f /dev/null
+    container_name: run_test_script
+    command:
+      sh -c "
+      sleep 10 &&
+      python ./run_tests.py"
     depends_on:
       - db
+      - app
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres_db
       - POSTGRES_HOST=db
-    volumes:
-      - .:/app
-
-
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: test
-    command: python ./test_script.py
-    depends_on:
-      - db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres_db
-      - POSTGRES_HOST=db
-
-
-volumes:
-  db_data:
