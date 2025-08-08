@@ -12,11 +12,6 @@ services:
       - "8080:8080"
     depends_on:
       - db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres_db
-      - POSTGRES_HOST=db
     volumes:
       - .:/app
 
@@ -31,22 +26,21 @@ services:
     ports:
       - "5432:5432"
 
-
-#  shell:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: shell
-#    command: tail -f /dev/null
-#    depends_on:
-#      - db
-#    environment:
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=postgres
-#      - POSTGRES_DB=postgres_db
-#      - POSTGRES_HOST=db
-#    volumes:
-#      - .:/app
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres_db
+      - POSTGRES_HOST=db
+    command: sh -c "
+      sleep 5 &&
+      poetry run pytest"
 
 
   run_test_script:
@@ -61,8 +55,3 @@ services:
     depends_on:
       - db
       - app
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres_db
-      - POSTGRES_HOST=db

@@ -27,12 +27,12 @@ class BookRepository(BaseRepository):
         query = query.limit(limit)
         query = query.order_by(Book.id.desc())
 
-        result = await self._session.execute(query)
+        result = await self._session.exec(query)
         return result.scalars().all()
 
     async def get_by_id(self, book_id: int) -> Book | None:
         query = select(Book).where(Book.id == book_id)
-        result = await self._session.execute(query)
+        result = await self._session.exec(query)
         return result.scalar_one()
 
     async def create(self, book: BookCreate) -> Book:
@@ -55,6 +55,6 @@ class BookRepository(BaseRepository):
             .where(Book.id == book_id)
             .values(**book.model_dump())
         )
-        await self._session.execute(query)
+        await self._session.exec(query)
         await self._session.commit()
         return await self.get_by_id(book_id)
